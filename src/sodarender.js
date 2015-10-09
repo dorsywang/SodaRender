@@ -534,6 +534,8 @@
         eventPool[type].push(func);
     };
 
+    sodaRender.author = "dorsy";
+
     var triggerEvent = function(type, e, data){
         var events = eventPool[type] || [];
 
@@ -547,8 +549,11 @@
     var compile = function(str, data){
     };
 
-    window.sodaRender = sodaRender;
-    window.sodaFilter = sodaFilter;
+    if(window.sodaRender && window.sodaRender.author === "dorsy"){
+    }else{
+        window.sodaRender = sodaRender;
+        window.sodaFilter = sodaFilter;
+    }
 
     // 监听数据异常情况
 })();
