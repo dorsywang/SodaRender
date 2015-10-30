@@ -280,6 +280,10 @@
         sodaFilterMap[name] = func;
     };
 
+    sodaFilter.get = function(name){
+        return sodaFilterMap[name];
+    };
+
     sodaFilter("date", function(input, lenth){
         return lenth;
     });
