@@ -61,7 +61,7 @@ USING&nbsp;: &nbsp;&nbsp;SodaFilter(String filterName, Function func(input, args
 DESCR&nbsp;: &nbsp;&nbsp;Defining Filters, so you can use filters in template<br />
 
 ##Template Language (AngularJs Template Like)
-###Now, we just offer three directives as below. More will be added soon later. But the three directives are able to meet our daily needs.
+####More directives have been added
 ####{{}}
 >out put expressions
 
