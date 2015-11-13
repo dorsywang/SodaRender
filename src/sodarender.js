@@ -32,6 +32,14 @@
             }
         });
 
+        if(_attrStr === 'true'){
+            return true;
+        }
+
+        if(_attrStr === 'false'){
+            return false;
+        }
+
         var _getValue = function(data, attrStr){
             var dotIndex = attrStr.indexOf(".");
 
@@ -40,7 +48,7 @@
                 attrStr = attrStr.substr(dotIndex + 1);
 
                 // 检查attrStr是否属性变量并转换
-                if(_data[attr] && CONST_REG.test(attr)){
+                if(typeof _data[attr] !== "undefined" && CONST_REG.test(attr)){
                     attr = _data[attr];
                 }
 
@@ -63,7 +71,7 @@
             }else{
 
                 // 检查attrStr是否属性变量并转换
-                if(_data[attrStr] && CONST_REG.test(attrStr)){
+                if(typeof _data[attrStr] !== "undefined" && CONST_REG.test(attrStr)){
                     attrStr = _data[attrStr];
                 }
 
@@ -309,27 +317,34 @@
                     return '';
                 });
 
-                trackName = trackName || '$index';
 
-                var inReg = /([^\s]+)\s+in\s+([^\s]+)/;
+                var inReg = /([^\s]+)\s+in\s+([^\s]+)|\(([^,]+)\s*,\s*([^)]+)\)\s+in\s+([^\s]+)/;
 
                 var r = inReg.exec(opt);
                 if(r){
-                    itemName = (r[1] || '').trim();
-                    valueName = (r[2] || '').trim();
+                    if(r[1] && r[2]){
+                        itemName = (r[1] || '').trim();
+                        valueName = (r[2] || '').trim();
 
-                    if(! (itemName && valueName)){
-                        return;
+                        if(! (itemName && valueName)){
+                            return;
+                        }
+                    }else if(r[3] && r[4] && r[5]){
+                        trackName = (r[3] || '').trim();
+                        itemName = (r[4] || '').trim();
+                        valueName = (r[5] || '').trim();
                     }
                 }else{
                     return;
                 }
 
+                trackName = trackName || '$index';
+
                 // 这里要处理一下
                 var repeatObj = getValue(scope, valueName) || [];
                 var lastNode = el;
 
-                for(var i = 0; i < repeatObj.length; i ++){
+                var repeatFunc = function(i){
                     var itemNode = el.cloneNode();
 
                     var itemScope = {};
@@ -345,7 +360,8 @@
                           sodaDirectiveMap['soda-if'].link(itemScope, itemNode, itemNode.attributes);
 
                           if(itemNode.getAttribute("removed") === "removed"){
-                            continue;
+                            return;
+                            //continue;
                           }
                     }
 
@@ -387,6 +403,18 @@
                         el.parentNode.insertBefore(itemNode, lastNode.nextSibling);
 
                         lastNode = itemNode;
+                    }
+                };
+
+                if('length' in repeatObj){
+                    for(var i = 0; i < repeatObj.length; i ++){
+                        repeatFunc(i);
+                    }
+                }else{
+                    for(var i in repeatObj){
+                        if(repeatObj.hasOwnProperty(i)){
+                            repeatFunc(i);
+                        }
                     }
                 }
 

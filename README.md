@@ -35,7 +35,7 @@ SodaRender is currently using by QQ Tribes(兴趣部落) and other projects
 </html>
 ```
 ```JavaScript
-var templateStr = document.getElementById("dataList");
+var templateStr = document.getElementById("dataList").innerHTML;
 var target = document.getElementById("targetUl");
 
 var data = {
@@ -70,6 +70,7 @@ DESCR&nbsp;: &nbsp;&nbsp;Defining Filters, so you can use filters in template<br
 ####soda-repeat
 >soda-repeat="item in array"
 >soda-repeat="item in array track by index"
+>soda-repeat="(key, value) in object"
 USING&nbsp;: &nbsp;&nbsp;SodaRender(String templateStr, Object data)<br />
 DESCR&nbsp;: &nbsp;&nbsp;Using templateStr with data to render template<br />
 
@@ -96,7 +97,7 @@ DESCR&nbsp;: &nbsp;&nbsp;Using templateStr with data to render template<br />
 >{{input|filte1:args1:args2...|filter2:args...}}
 how to define filters? Just using sodaFilter Method as methioned above. Here is an example.
 ```JavaScript
-SodaFilter('shortTitle', function(input, length){
+sodaFilter('shortTitle', function(input, length){
         return (input || '').substr(0, length);
 });
 ```

@@ -3,20 +3,31 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
+  <style type="text/css">
+  
+.result{
+  float: right;
+  color: red;
+}
+  </style>
 </head>
 <body>
 <script type="text/ppp" id="p">
 <div soda-pic='{{2}}%'></div>
-{{style['background-color']}}
-{{list[0].show}}
+{{style['background-color']}}                         <span class="result">=> red </span><br />
+{{list[0].show}}                                      <span class="result">=> 1 </span><br />
+{{list[0]}}                                            <span class="result">=> [object object] </span><br />
 <span soda-repeat="item in mm"></span>
-{{2}}
-<span soda-if="2">显示</span>
-<span soda-if="0">不显示</span>
-{{a.p || a}}
-{{0}}
-{{'aa' + 1}}
-<img soda-src="pp{{'aa'}}.img" soda-if='1' />
+{{2}}                                                  <span class="result">=> 2 </span><br />
+<span soda-if="2">显示</span>                          <span class="result">=> 显示 </span><br />
+<span soda-if="0">不显示</span>                        <span class="result">=> </span><br />
+<span soda-if="true">true显示</span>                     <span class="result">=> true显示 </span><br />
+<span soda-if="false">false显示</span>                   <span class="result">=> </span><br />
+
+{{a.p || a}} <span class="result">=> 1</span><br />
+{{0}}   <span class="result">=> 0</span><br />
+{{'aa' + 1}} <span class="result">=> aa1</span><br />
+<img soda-src="pp{{'aa'}}.img" soda-if='1' />                 <span class="result">=> 裂图</span><br />
 <div soda-repeat="item in list" data-id="{{item.name}}" id="sd{{p}}">
 {{item.show |   date:'2'}}
 {{item.show |        filter1:$index}}
@@ -30,9 +41,25 @@
 <div class="{{a+1}}" soda-if="a" soda-class="!a ? 'active' : 'p'">{{a}}</div>
 {{list[0]['name']}}
 <div id="pp" soda-style="style" style="opacity: 1;"></div>
+
+<span soda-repeat="item in list track by $mm">
+{{$mm}}
+</span>
+<span class="result">=> 0 1 ... 6</span><br />
+
+
+<span soda-repeat="item in list track by $ff">
+{{$ff + 1}}
+</span>
+<span class="result">=> 1 ... 7</span><br />
+
+{{list[list[0].show === 1 ? list[0].name : 1].list[0].title}}   <span class="result">=> <>aa&lt;/h1></span><br />
+
+
+<span soda-repeat="(key, value) in trackObject">{{key}}:{{value}}</span>  <span class="result">=> a:1 b:2</span><br />
 </script>
 
-<div id="pp" style="width: 10px;"></div>
+<div id="pp" style="width: 1000px;"></div>
 
 
 <script type="text/javascript" src="../src/sodaRender.js"></script>	
@@ -71,7 +98,12 @@ var data = {
      },
 
      b: '<div><a href=pp>{{s|sdfsdf{{adfdsf}}</a></div>',
-       mm: null
+       mm: null,
+
+       trackObject: {
+         a: 1,
+         b: '2'
+       }
 };
 
 data.style['background-color'] = 'red';
