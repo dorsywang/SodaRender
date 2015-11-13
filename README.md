@@ -71,6 +71,7 @@ DESCR&nbsp;: &nbsp;&nbsp;Defining Filters, so you can use filters in template<br
 >soda-repeat="item in array"
 >soda-repeat="item in array track by index"
 >soda-repeat="(key, value) in object"
+
 USING&nbsp;: &nbsp;&nbsp;SodaRender(String templateStr, Object data)<br />
 DESCR&nbsp;: &nbsp;&nbsp;Using templateStr with data to render template<br />
 
