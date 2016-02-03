@@ -18,7 +18,7 @@
 {{list[0].show}}                                      <span class="result">=> 1 </span><br />
 {{list[0]}}                                            <span class="result">=> [object object] </span><br />
 <span soda-repeat="item in mm"></span>
-{{2}}                                                  <span class="result">=> 2 </span><br />
+{{2}}{{3}}                                                <span class="result">=> 2 </span><br />
 <span soda-if="2">显示</span>                          <span class="result">=> 显示 </span><br />
 <span soda-if="0">不显示</span>                        <span class="result">=> </span><br />
 <span soda-if="true">true显示</span>                     <span class="result">=> true显示 </span><br />
@@ -63,20 +63,23 @@
 
 
 <script type="text/javascript" src="../src/sodaRender.js"></script>	
+<!--<script type="text/javascript" src="../release/sodaRender.js"></script>	-->
 <script type="text/javascript">
+/*
 sodaRender.addEventListener("nullvalue", function(e){
     var data = e.data;
 
     var name = data.name;
     console.log(name + " was empty");
 });
+*/
 window.show = 1;
 sodaFilter("date", function(input, length){
     return "2d" + length;
 });
 
 sodaFilter("filter1", function(input, show){
-    console.log(input, show);
+    // console.log(input, show);
     return input + show;
 });
 var data = {
